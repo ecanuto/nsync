@@ -23,13 +23,14 @@
 #include "logger.h"
 
 bool terminate;
+bool daemonize;
 
 void signal_handler(int signal)
 {
 	switch (signal)
 	{
 		case SIGHUP:
-			logger(LOG_WARNING, "Received SIGHUP signal");
+			logger(LOG_WARNING, "Received SIGHUP signal", strsignal(signal));
 			terminate = true;
 			break;
 
@@ -58,6 +59,11 @@ void signal_handler(int signal)
 int main(int argc, char *argv[])
 {
 	terminate = false;
+	daemonize = false;
+
+	// posix daemon (fork, setid and close file descriptors)
+	if (daemonize && (daemon(1, 0) < 0))
+		return EXIT_FAILURE;
 
 	// initialize logging
 	logger_open("nsyncd.log");
