@@ -1,7 +1,9 @@
 bin_PROGRAMS = nsyncd
 
 nsyncd_SOURCES = \
-	src/nsyncd.c
+	src/nsyncd.c \
+	src/logger.c \
+	src/logger.h
 
 MAINTAINERCLEANFILES =      \
 	$(srcdir)/aclocal.m4    \
