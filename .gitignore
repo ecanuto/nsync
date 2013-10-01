@@ -1,0 +1,50 @@
+# Autotools
+*~
+*.a
+*.o
+*.la
+*.lo
+*.bkp
+*.patch
+*.tar.xz
+*.vim
+.deps
+.libs
+.settings
+.dirstamp
+aclocal.m4
+autom4te.cache
+compile
+config.cache
+config.h
+config.h.in
+config.h.win32
+config.log
+config.status
+config.guess
+config.sub
+configure
+core.*
+core
+libtool
+intltool-*.in
+depcomp
+ltmain.sh
+install-sh
+Makefile
+Makefile.in
+missing
+mkinstalldirs
+stamp-h1
+INSTALL
+
+# Mac OS X
+._*
+.DS_Store
+
+# Others
+*.log
+nbproject
+
+# Binaries and logs
+nsyncd
