@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <signal.h>
+#include <string.h>
 #include <unistd.h>
 #include "logger.h"
 
@@ -27,33 +28,8 @@ bool daemonize;
 
 void signal_handler(int signal)
 {
-	switch (signal)
-	{
-		case SIGHUP:
-			logger(LOG_WARNING, "Received SIGHUP signal", strsignal(signal));
-			terminate = true;
-			break;
-
-		case SIGINT:
-			logger(LOG_WARNING, "Received SIGINT signal");
-			terminate = true;
-			break;
-
-		case SIGTERM:
-			logger(LOG_WARNING, "Received SIGTERM signal");
-			terminate = true;
-			break;
-
-		case SIGQUIT:
-			logger(LOG_WARNING, "Received SIGQUIT signal");
-			terminate = true;
-			break;
-
-		default:
-			logger(LOG_WARNING, "Unhandled signal %s", strsignal(signal));
-			terminate = true;
-			break;
-	}
+	logger(LOG_NOTICE, "Received %s signal", strsignal(signal));
+	terminate = true;
 }
 
 int main(int argc, char *argv[])
