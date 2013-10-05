@@ -5,6 +5,8 @@ nsyncd_SOURCES = \
 	src/logger.c \
 	src/logger.h
 
+nsyncd_LDADD = @PACKAGE_LIBS@ @PTHREAD_LIBS@
+
 MAINTAINERCLEANFILES =      \
 	$(srcdir)/aclocal.m4    \
 	$(srcdir)/compile       \

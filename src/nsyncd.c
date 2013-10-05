@@ -21,6 +21,7 @@
 #include <signal.h>
 #include <string.h>
 #include <unistd.h>
+#include <pthread.h>
 #include "logger.h"
 
 bool terminate;
@@ -32,10 +33,28 @@ void signal_handler(int signal)
 	terminate = true;
 }
 
+void *watcher(void *args)
+{
+	while (!terminate)
+	{
+		logger(LOG_DEBUG, "watcher beat");
+	}
+}
+
+void *syncer(void *args)
+{
+	while (!terminate)
+	{
+		logger(LOG_DEBUG, "syncer beat");
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	terminate = false;
 	daemonize = false;
+
+	pthread_t watcher_thread, syncer_thread;
 
 	// posix daemon (fork, setid and close file descriptors)
 	if (daemonize && (daemon(1, 0) < 0))
@@ -54,12 +73,13 @@ int main(int argc, char *argv[])
 
 	printf("%s %s\n", PACKAGE_NAME, PACKAGE_VERSION);
 
-	// main looping
-	while (!terminate)
-	{
-		logger(LOG_DEBUG, "beat");
-		sleep(1);
-	}
+	// create file watcher and syncronization threads
+	pthread_create(&watcher_thread, NULL, watcher, NULL);
+	pthread_create(&syncer_thread, NULL, syncer, NULL);
+
+	// wait for threads termination
+	pthread_join(watcher_thread, NULL);
+	pthread_join(syncer_thread, NULL);
 
 	// close logging
 	logger_close();
