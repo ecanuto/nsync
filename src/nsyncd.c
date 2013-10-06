@@ -22,7 +22,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <pthread.h>
+#include "nsyncd.h"
 #include "logger.h"
+#include "watcher.h"
 
 bool terminate;
 bool daemonize;
@@ -31,14 +33,6 @@ void signal_handler(int signal)
 {
 	logger(LOG_NOTICE, "Received %s signal", strsignal(signal));
 	terminate = true;
-}
-
-void *watcher(void *args)
-{
-	while (!terminate)
-	{
-		logger(LOG_DEBUG, "watcher beat");
-	}
 }
 
 void *syncer(void *args)

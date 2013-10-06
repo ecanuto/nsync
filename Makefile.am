@@ -1,9 +1,12 @@
 bin_PROGRAMS = nsyncd
 
-nsyncd_SOURCES = \
-	src/nsyncd.c \
-	src/logger.c \
-	src/logger.h
+nsyncd_SOURCES =  \
+	src/nsyncd.c  \
+	src/nsyncd.h  \
+	src/logger.c  \
+	src/logger.h  \
+	src/watcher.c \
+	src/watcher.h
 
 nsyncd_LDADD = @PACKAGE_LIBS@ @PTHREAD_LIBS@
 
